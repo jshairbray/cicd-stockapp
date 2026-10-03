@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Data: the database is built by update_quotes.init_db()
+data/
+*.db
+*.db.*
+
+# Secrets
+.env
+*.env
+
+# Generated files
+*.pdf
