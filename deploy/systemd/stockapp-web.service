@@ -1,0 +1,19 @@
+[Unit]
+Description=cicd-stockapp Streamlit web app
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=stockapp
+Group=stockapp
+WorkingDirectory=/opt/stockapp
+Environment=STOCKAPP_DATA_DIR=/var/lib/stockapp
+ExecStart=/opt/stockapp/venv/bin/streamlit run app.py \
+  --server.address=127.0.0.1 --server.port=8501 \
+  --server.headless=true --browser.gatherUsageStats=false \
+  --server.fileWatcherType=none
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
