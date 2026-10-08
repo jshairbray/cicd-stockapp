@@ -18,7 +18,7 @@ from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, ListFlowable, ListItem,
-    Table, TableStyle, PageBreak, HRFlowable,
+    Table, TableStyle, HRFlowable,
 )
 
 OUTPUT_DIR = "/sdcard/Download/"
