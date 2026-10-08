@@ -1,4 +1,4 @@
-streamlit==1.38.0
+streamlit==1.65.0
 yfinance==1.5.2
 reportlab==5.0.0
 Flask==3.1.3
