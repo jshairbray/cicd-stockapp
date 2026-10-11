@@ -60,7 +60,7 @@ def show_output(text):
         st.code(text, language=None)
 
 
-st.title("📈 Stock Tracker")
+st.title("📈 Stock Tracker V1")
 st.caption(f"Database: {uq.DB_PATH}")
 
 page = st.sidebar.radio(
