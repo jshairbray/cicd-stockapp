@@ -1,4 +1,5 @@
-# Practice note: this app is deployed by hand for now.
+# Practice note: this app is deployed by hand with git pull.
+# Next: deploy automatically with CI/CD.
 """
 Web GUI for update_quotes.py / generate_docs.py.
 
@@ -61,7 +62,7 @@ def show_output(text):
         st.code(text, language=None)
 
 
-st.title("📈 Stock Tracker V2")
+st.title("📈 Stock Tracker V3")
 st.caption(f"Database: {uq.DB_PATH}")
 
 page = st.sidebar.radio(
