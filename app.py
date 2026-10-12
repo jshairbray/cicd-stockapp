@@ -403,3 +403,5 @@ elif page == "Documentation PDF":
     if os.path.exists(gd.OUTPUT_PATH):
         with open(gd.OUTPUT_PATH, "rb") as f:
             st.download_button("Download documentation PDF", f, file_name="update_quotes_documentation.pdf")
+
+raise RuntimeError("deliberate crash for CI test")
