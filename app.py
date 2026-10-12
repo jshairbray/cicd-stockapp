@@ -1,4 +1,5 @@
 # Practice note: this app is deployed by hand with git pull.
+# Next: deploy automatically with CI/CD.
 """
 Web GUI for update_quotes.py / generate_docs.py.
 
