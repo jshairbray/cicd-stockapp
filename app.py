@@ -1,4 +1,4 @@
-# Practice note: this app is deplyed by hand for now.
+# Practice note: this app is deployed by hand for now.
 """
 Web GUI for update_quotes.py / generate_docs.py.
 
