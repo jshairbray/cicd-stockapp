@@ -35,9 +35,13 @@ jobs:
         run: pytest -q
 
   build:
+    name: build
     needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v7
 
@@ -68,3 +72,22 @@ jobs:
       - name: Show logs on failure
         if: failure()
         run: docker logs stockapp
+
+      - name: Log in to Google Cloud (main only)
+        id: auth
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/51964386995/locations/global/workloadIdentityPools/github/providers/cicd-stockapp
+          service_account: gh-ci-pusher@jbs-labs.iam.gserviceaccount.com
+          token_format: access_token
+
+      - name: Push image to Artifact Registry (main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          IMAGE: us-east1-docker.pkg.dev/jbs-labs/stockapp/stockapp:${{ github.sha }}
+        run: |
+          echo "${{ steps.auth.outputs.access_token }}" | docker login -u oauth2accesstoken --password-stdin https://us-east1-docker.pkg.dev
+          docker tag stockapp:ci "$IMAGE"
+          docker push "$IMAGE"
+          echo "Pushed $IMAGE"
