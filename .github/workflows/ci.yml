@@ -33,3 +33,38 @@ jobs:
 
       - name: Tests (pytest)
         run: pytest -q
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build --tag stockapp:ci .
+
+      - name: Start container
+        run: docker run --detach --name stockapp --publish 8501:8501 stockapp:ci
+
+      - name: Wait until healthy
+        run: |
+          for i in $(seq 1 60); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' stockapp)
+            echo "Attempt $i: $status"
+            if [ "$status" = "healthy" ]; then exit 0; fi
+            if [ "$(docker inspect --format '{{.State.Running}}' stockapp)" != "true" ]; then
+              echo "Container stopped"
+              exit 1
+            fi
+            sleep 2
+          done
+          echo "Not healthy after 2 minutes"
+          exit 1
+
+      - name: Check from outside the container
+        run: curl --fail --silent --show-error http://127.0.0.1:8501/_stcore/health
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker logs stockapp
