@@ -1,0 +1,28 @@
+# Version control, CI and editor
+.git
+.github
+.vscode
+.gitattributes
+.gitignore
+
+# Local Python environments and caches
+.venv
+venv
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.ruff_cache
+
+# Not needed inside the app image
+tests/
+ops/
+**/*.log
+
+# Data and secrets never go into an image
+data/
+**/*.db
+**/*.db-*
+**/*.sqlite*
+**/*.pdf
+**/.env
+**/*.env
