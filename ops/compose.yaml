@@ -1,0 +1,17 @@
+# Runs the stockapp web container. The image is chosen by ops/deploy.sh.
+name: stockapp
+
+services:
+  web:
+    image: ${STOCKAPP_IMAGE:?STOCKAPP_IMAGE must be set - use ops/deploy.sh}
+    container_name: stockapp
+    user: "999:994"
+    environment:
+      HOME: /data
+      STREAMLIT_SERVER_FILE_WATCHER_TYPE: none
+    volumes:
+      - /var/lib/stockapp:/data
+    ports:
+      - "127.0.0.1:8501:8501"
+    mem_limit: 400m
+    restart: unless-stopped
